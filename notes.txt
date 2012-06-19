@@ -1,0 +1,249 @@
+	Ludum Dare 23
+	Theme: Tiny World
+	Copyright 2012 @PavelDlouhy from 90Edges. All rights reserved. ;)
+
+	(this file will be inside .app package)
+
+
+limits:
+	-VM resolution: 320 * y (16/9)
+	-real resolution: 320*3 * 180*3
+	-colors: monochromatic (green)
+	-just one or two c++ class (splitted info few files for better orientation)
+	-naive "asm" interpret (no machine code, no compilation)
+	-simulated TXT mode
+	-256 sprites (8 x 8) - including character set (font)
+	-VM memory byte/word: 32 bits (signed)
+	-VM event list entry: 16 bits (unsigned)
+	-two chars long instructions (e.g. mo for mov)
+	-[?] what about virtual machine used in game?
+		-I will try two VM now
+			If there will not be problems now I will use it in game
+	-editor not available in full game (to save time)
+	-GL_QUADS only
+	-immediate mode only (no vertex buffers)
+	-no allocators
+	-no random number support (next time)
+	
+
+VM memory:
+	0-1023 - registers and real machine registers (mapped)
+	1024 - sprites addr
+	32768 - text mode - page 0 (front/back buffer)
+	33768 - text mode - page 1 (front/back buffer)
+	
+	
+VM1 specification:
+	memory:
+	  0-32767 (system memory - undocumented parts are reserved for future)
+	  32768-65535 - user memory
+	
+	
+registers:
+	GFX_EDIT_ADDR
+	GFX_SPRITES_ADDR
+	GFX_SPRITE_W
+	GFX_FRONTBUFFER_ADDR	;it is some kind of text mode
+	GFX_BACKBUFFER_ADDR
+	SVM_RENDER_ENABLED
+	...
+	
+
+instruction set:
+	[x];comment 
+	[x] mo op1 op2 ;mov
+	[x] ad op1 op2 ;add
+	[x] mu op1 op2 ;mul
+	[x] cm op1 op2 ;compare
+ 	
+	[x] j label ;jump
+	[x] je label
+	[x] jn label
+	[x] jg label
+	[x] jl label
+[x]:label
+	[x] ca label ;call
+	[x] re ;return
+	[x] pu op1 ;push
+	//pop will be automatic [] po op1 ;pop
+
+	[x] $some text here ;string data marker
+	
+	
+op1:
+	[x] [number] ;number can't be 0 here (0 is like NULL)
+	[x] [[number]]
+	[x] [[[number]]] should be also possibleÉ
+op2:
+	[x] number 
+	[x] -number
+	[x] [number] ;number can't be 0 here (0 is like NULL)
+	[x] [[number]]
+	[x] [[[number]]] should be also possible... ;)
+
+
+editor controls:
+	[x] Cmd+1	TXTEdit
+	[x] Cmd+2	GFXEdit
+	[ ] Cmd+0	Reset
+	[x] Cmd+5	RUN! (EXEC mode)
+	[x] Cmd+S	Save
+
+
+game:
+	-some kind of puzzle game?
+	-little enemies
+	
+	
+
+todolist-DAY1:
+	{VideoRecording1}
+	time: 08:11 (Prague time) - LD23 started 5 hour ago
+	[x] wake up
+	[x] concept and todolist
+	time: 08:56
+	Objective-C:
+	[x] timer (60Hz)
+	[x] OpenGL (double buffer, no VSync)
+	[x] mouse input
+	[x] keyb. input
+	time: 09:31
+	C/C++:
+	[x] class CRealMachine
+	[x] timer -> real event
+	[x] mouse input -> real event
+	[x] key. input -> real event
+	[x] SHORT BREAK (banana_count--)
+	time: 09:58
+	[x] class CVirtualMachine1 (NE-VM1 - NE stands for 90Edges)
+	[x] sys modes (TXT edit, *GFX edit* and EXEC)
+	[x] primary and secondary VM base - part 1 (Ugh!)
+	[x] Render - part 1
+	[x] SHORT BREAK
+	time: 10:58
+	[x] primary and secondary VM base - part 2 (Ugh!)
+	[x] Render - part 2
+	[x] SHORT BREAK (apple_count--)
+	time: 11:42
+	[x] Render - part 3
+	[x] VM - event list
+		[x] Real events -> Virtual Events
+		[x] event filter (mouse/keyb. filtered in the input of VM)
+		SHORT BREAK
+		[x] add events to event list
+	time: 12:39
+	[x] lunch ;)
+
+	{VideoRecording2}
+	time: 13:27
+	[x] VM tick
+	[x] filter mouse out of view
+	[x] ProcessEvent
+	[x] simple GFX editor
+		[x] draw grid
+		[x] highlight sprite "line"
+		[x] VCoor2Addr
+		SHORT BREAK
+		time: 14:54
+		[x] draw editPixel on cursor
+		[x] draw cross
+		[x] actual draw (into sprite)
+		[x] up, down (vertical scroll)
+	[x] simple TXT editor - part 1
+		[x] Cmd+1/2 (switch to TXT/GFX edit mode)
+		SHORT BREAK
+		time: 16:09
+		[x] list and iterators
+		[x] render text mode
+		[x] textedit -> textmode
+		[x] write chars ('a-z','0-9',' ','$','-',':','[',']','_')
+		SHORT BREAK
+		time: 18:06
+		[x] enter (0xd)
+
+	{VideoRecording3}
+		[x] dinner
+		time: 19:02
+		[x] cursor
+		[x] backspace
+		[x] left, right, up, down (for txt edit mode and exec mode)
+	[x] save/load events
+	[x] cumulated tick? (to make significantly less save file - but it takes time)
+	[x] fix bug (Cmd+1/2 is adding chars in textedit)
+	[x] draw character set (one char in one sprite)
+	[] restore registers (Cmd+0)
+	[x] test editorEnabled
+	SHORT BREAK (apple_count--)
+	time: 21:14
+	[x] bug in textedit (enter on the end of document)
+	[x] exec mode
+	[x] crash marker
+	[x] interpret - part1
+	END OF DAY 1
+	time: 12:02
+
+todolist-DAY2:
+
+	{VideoRecording4}
+	time: 08:17
+	[x] interpret - part2
+	[x] game code library (script/"asm") - part 1
+		[x] flipandsleep request
+		[x] clear_screen
+		[x] main loop
+	[x] simple TXT editor - part 2
+		[x] UP, DOWN - 8 lines or so
+		SHORT BREAK (banana_count--)
+		time: 10:27
+		[x] handle big text (more pages - render)
+	[x] game code library (script/"asm") - part 2
+		[x] xy2addr
+	[x] interpret - part3
+		[x] mu instruction
+		[x] $ - string support!
+	SHORT BREAK (apple_count--)
+	time: 11:25
+	[x] exec mode keyb. support (left, right, up, down, space)
+	SHORT BREAK
+	time: 12:30
+	[x] start screen test
+	time: 13:12
+	[ ] lunch
+
+	[ ] fix bug - exec mode in replay seems to not work ;(
+
+	[ ] gamelib - collisions
+
+	Game code (script/"asm")
+	[ ] first level/room
+	[ ] player render
+	[ ] player control (it will probably be robot with tentacles - will see)
+	[ ] enemy1
+	[ ] gun?
+	[ ] trees
+	
+	
+	[ ] test editorEnabled
+	[x] draw .app icon
+	[ ] switch to Release
+	[x] update .plist
+		[x] icon
+		[x] com. set
+	[ ] update .sib
+	[ ] @#@#@ FINAL marker
+	[ ] disable editor
+	[ ] test .app
+	[ ] short game description
+	time: 0x:00 (Monday)
+	[ ] submit game and source code
+	[ ] DEADLINE: time 03:00 
+
+todolist-DAY3:
+	[ ] conversion to Windows? Maybe
+	[ ] upload videos from development (YouTube)
+
+
+NEXT-TIME (next Ludum Dare?):
+	-vertex buffers (some tesselator)
+	-use matrix
+	
