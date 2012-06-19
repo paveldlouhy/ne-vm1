@@ -137,7 +137,7 @@ void CVirtualMachine1::Save()
 	FILE *f = fopen("ne-vm1.sav", "wb");
 	if (f) {
 		std::vector<TVirtualEventValueType>::iterator it = events.begin();
-		unsigned int count = events.size();
+		unsigned int count = (unsigned int)events.size();
 		fwrite(&count, sizeof(count), 1, f);
 		while (it != events.end()) {
 			TVirtualEventValueType val = *it++;
@@ -226,7 +226,7 @@ void CVirtualMachine1::Tick()
 			std::vector<TVirtualEventValueType>::iterator it1 = events.begin() + currentEventPos;
 			std::vector<TVirtualEventValueType>::iterator it2 = it1;
 			ProcessEvent(it2);
-			currentEventPos += std::distance(it1, it2);
+			currentEventPos += (unsigned int)std::distance(it1, it2);
 			if (!primaryVirtualMachine) {
 				break;
 			}
@@ -258,7 +258,7 @@ bool CVirtualMachine1::IsExecMode()
 
 bool CVirtualMachine1::IsEnableEditorReq()
 {
-	return (m[SYS_ENABLEEDITOR_REQ]);
+	return (m[SYS_ENABLEEDITOR_REQ] ? true : false);
 }
 
 void CVirtualMachine1::SetVMMem(int addr, int val)

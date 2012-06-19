@@ -161,7 +161,7 @@ private:
 	
 	// events
 	std::vector<TVirtualEventValueType> events;
-	int currentEventPos;
+	unsigned int currentEventPos;
 #ifdef USE_CUMULATED_TICK
 	int cumulatedTick;
 	int cumulatedTickProcessed;

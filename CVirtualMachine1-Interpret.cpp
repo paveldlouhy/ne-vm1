@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <assert.h>
+#include <algorithm>
 
 
 using std::cout;
@@ -22,7 +23,7 @@ using std::endl;
 void CVirtualMachine1::Crash()
 {
 	if (crashPos == te.end()) {
-		cout << "CRASH! " << std::distance(crashPos, execPos) << endl;
+		cout << "CRASH! " << (unsigned int)std::distance(crashPos, execPos) << endl;
 		crashPos = execPos;
 		
 	}
@@ -418,7 +419,7 @@ void CVirtualMachine1::ProcessInstruction()
 		execPos++;
 		if (*execPos == 'a') {
 			execPos++;
-			callStack.push(std::distance(te.begin(),execPos));
+			callStack.push((unsigned int)std::distance(te.begin(),execPos));
 			dataStack.push(-1);//marker
 			dataStack.push(-1);
 			SkipWhiteSpace();

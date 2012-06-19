@@ -12,7 +12,13 @@
 #include "CVirtualMachine1.h"
 
 
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <gl/gl.h>
+#else
 #include <OpenGL/OpenGL.h>
+#endif
 
 
 #include <iostream>
@@ -52,7 +58,7 @@ CRealMachine::~CRealMachine()
 void CRealMachine::PushEvent(TRealEventValueType event, TRealEventValueType p1, TRealEventValueType p2)
 {
 //	if (event != 1) { // exclude tick event
-//		cout << "CRealMachine::PushEvent: " << event << ", " << p1 << ", " << p2 << endl;
+		cout << "CRealMachine::PushEvent: " << event << ", " << p1 << ", " << p2 << endl;
 //	}
 	if(vm->IsEnableEditorReq())
 	{

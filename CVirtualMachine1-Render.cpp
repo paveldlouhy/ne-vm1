@@ -11,7 +11,13 @@
 #include "CVirtualMachine1.h"
 
 
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <gl/gl.h>
+#else
 #include <OpenGL/OpenGL.h>
+#endif
 
 
 #include <iostream>
@@ -200,7 +206,7 @@ void CVirtualMachine1::Render(int x1, int y1, int x2, int y2)
 	{
 		int rX = VSCREEN_DX / 20;
 		int rY = VSCREEN_DY / 20;
-		int div =  (events.size() / 100 * 99);
+		unsigned int div = (unsigned int)(events.size() / 100 * 99);
 		if (div == 0) div = 1;
 		SetColor(0.5f, 0.5f, 0.5f);
 		RenderQuad(rX * 1, rY * 8 , rX * 18, rY * 4);

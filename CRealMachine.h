@@ -7,6 +7,10 @@
  *
  */
 
+#ifdef WIN32
+#define NE_VM_WIN_WINDOWNAME "NE-VM1"
+#define NE_VM_WIN_MAINWINDOW_DX		RSCREEN
+#endif // WIN32
 
 #define RSCREEN_DX			(320*3)
 #define RSCREEN_DY			(180*3)

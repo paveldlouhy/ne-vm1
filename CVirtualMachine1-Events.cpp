@@ -31,7 +31,7 @@ void CVirtualMachine1::PushEvent(TVirtualEventValueType event, TVirtualEventValu
 			events.push_back(VEVNT_CUMULATEDTICK);
 			events.push_back(cumulatedTick);
 			cumulatedTick = 0;
-			cout << "PushEvent - events.size: " << events.size() << endl;
+			cout << "PushEvent - events.size: " << (unsigned int)events.size() << endl;
 		}
 	}
 	else
@@ -42,7 +42,7 @@ void CVirtualMachine1::PushEvent(TVirtualEventValueType event, TVirtualEventValu
 			events.push_back(VEVNT_CUMULATEDTICK);
 			events.push_back(cumulatedTick);
 			cumulatedTick = 0;
-			cout << "PushEvent - events.size: " << events.size() << endl;
+			cout << "PushEvent - events.size: " << (unsigned int)events.size() << endl;
 		}
 #endif // USE_CUMULATED_TICK
 		events.push_back(event);
@@ -50,7 +50,7 @@ void CVirtualMachine1::PushEvent(TVirtualEventValueType event, TVirtualEventValu
 			events.push_back(p1);
 		if (p2 != VIRTUAL_EVENT_NOT_USED)
 			events.push_back(p2);
-		cout << "PushEvent - events.size: " << events.size() << endl;
+		cout << "PushEvent - events.size: " << (unsigned int)events.size() << endl;
 	}
 }
 
