@@ -16,7 +16,7 @@
 #include <windows.h>
 #include <gl/gl.h>
 #else
-#include <OpenGL/OpenGL.h>
+#include <OpenGL/gl.h>
 #endif
 
 
